@@ -1,1 +1,3 @@
-console.log(module); // module is not global
+var logger = require('./logger')
+
+logger.log('message');
