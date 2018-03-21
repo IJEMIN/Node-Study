@@ -1,8 +1,11 @@
-const Logger = require('./logger');
-const logger = new Logger();
+const http = require('http');
 
-logger.on('messageLogged', (arg) => {
-    console.log('Listener called',arg);
-});
+const server = http.createServer();
 
-logger.log('message');
+server.on('connection',(socket) => {
+    console.log('New Connection...');
+} );
+
+server.listen(3000);
+
+console.log('Listening on port 3000....');
