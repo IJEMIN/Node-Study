@@ -9,11 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "mongoose": "^5.0.11", // what is Caret Symbole? SemVer - Major.Minor.Patch
-    "underscore": "^1.8.3" // Patch - bug fix, Minor - New feature without broke Previous API Structure, Major - New feature change structure
-// Caret ^5.0.11 === 5.x , if there was just minor changes, install with updated one
-// Tilda ~1.8.3 === 1.8.x, only accept patched one, not minor or magor changed version
-// if don't assgin caret or tilda, package won't automatically updated
-
+    "mongoose": "^5.0.11",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "jshint": "^2.9.5"
   }
 }
