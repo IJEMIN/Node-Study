@@ -10,6 +10,10 @@ const express = require('express');
 const app = express();
 
 
+// express load pug
+app.set('view engine','pug');
+app.set('views','./views'); // override views path
+
 // process.env.NODE_ENV // init value : undefined
 
 app.use(express.json());
@@ -20,7 +24,8 @@ app.use(helmet());
 //Configureation
 console.log('Application Name: ' + config.get('name'));
 console.log('Mail Server Name: ' + config.get('mail.host'));
-console.log('Mail Password: ' + config.get('mail.password'));
+
+if(config.has('mail.password')) console.log('Mail Password: ' + config.get('mail.password'));
 
 
 if(app.get('env') === 'development') {
@@ -54,7 +59,7 @@ const courses = [
 // app.delete()
 
 app.get('/', (req, res) => {
-	res.send('Hello World!!!');
+	res.render('index', { title: 'My Express App', message: 'Hello'});
 });
 
 app.get('/api/courses', (req, res) => {
