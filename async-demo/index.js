@@ -1,12 +1,18 @@
 console.log('Before');
-const user = getUser(1, (user) => {
-    console.log('User', user);
-
-    getRepositories(user,(repos) => console.log(repos));
-});
+getUser(1, getRepositories);
 console.log('After');
 
+function getRepositories(user) {
+    getRepositories(user.gitHubUsername, getCommits);
+}
 
+function getCommits(repos) {
+    getCommits(repo, displayCommits);
+}
+
+function displayCommits(commits) {
+    console.log(commits);
+}
 
 function getUser(id, callback) {
     setTimeout(() => {
@@ -16,8 +22,8 @@ function getUser(id, callback) {
 }
 
 function getRepositories(id, callback) {
-    setTimeout( () => {
+    setTimeout(() => {
         console.log('Calling Github API...');
         callback(['repo1', 'repo2', 'repo3']);
-    },2000);
+    }, 2000);
 }
