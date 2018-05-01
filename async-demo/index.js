@@ -1,29 +1,44 @@
 console.log('Before');
-getUser(1, getRepositories);
+getUser(1, (user) => {
+    console.log('User', user);
+    getRepositories(user, (repos) => console.log(repos));
+});
+
 console.log('After');
 
-function getRepositories(user) {
-    getRepositories(user.gitHubUsername, getCommits);
+
+
+function getUser(id) {
+    return new Promise((resolve, reject) => {
+        // Kick off Async Work
+        setTimeout(() => {
+            console.log('Reading a user from a database');
+            reslove({ id: id, gitHubUsername: 'mosh' });
+        }, 2000);
+    });
 }
 
-function getCommits(repos) {
-    getCommits(repo, displayCommits);
+
+function getRepositories(usename) {
+
+    return new Promise((resolve, reject) => {
+
+        setTimeout(() => {
+            console.log('Calling Github API...');
+            resolve(['repo1', 'repo2', 'repo3']);
+        }, 2000);
+
+    })
 }
 
-function displayCommits(commits) {
-    console.log(commits);
-}
+function getCommits(repo) {
 
-function getUser(id, callback) {
-    setTimeout(() => {
-        console.log('Reading a user from a database');
-        callback({ id: id, gitHubUsername: 'mosh' });
-    }, 2000);
-}
+    return new Promise((resolve, reject) => {
 
-function getRepositories(id, callback) {
-    setTimeout(() => {
-        console.log('Calling Github API...');
-        callback(['repo1', 'repo2', 'repo3']);
-    }, 2000);
+        setTimeout(() => {
+            console.log('Calling Github API...');
+            resolve(['Commit']);
+        }, 2000);
+
+    })
 }
