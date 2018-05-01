@@ -1,11 +1,15 @@
+
 console.log('Before');
-getUser(1, (user) => {
-    console.log('User', user);
-    getRepositories(user, (repos) => console.log(repos));
-});
+
+const p = getUser(1);
+
+p
+.then(user => getRepositories(user.gitHubUsername))
+.then(repos => getCommits(repos[0]))
+.then(commits => console.log(commits))
+.catch(err => console.log('Error', err.message));
 
 console.log('After');
-
 
 
 function getUser(id) {
@@ -13,10 +17,11 @@ function getUser(id) {
         // Kick off Async Work
         setTimeout(() => {
             console.log('Reading a user from a database');
-            reslove({ id: id, gitHubUsername: 'mosh' });
+            resolve({ id: id, gitHubUsername: 'mosh' });
         }, 2000);
     });
 }
+
 
 
 function getRepositories(usename) {
