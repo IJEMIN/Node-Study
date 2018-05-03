@@ -1,8 +1,4 @@
 
-Promise.reolve(1);
-Promise.reject(new Error(''));
-Promise.all([p1, p2]);
-Promise.race([p1, p2]);
 
 const p1 = new Promise((resolve) => {
   setTimeout(() => {
