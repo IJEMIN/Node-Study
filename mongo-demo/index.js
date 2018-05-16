@@ -60,19 +60,13 @@ async function updateCourse(id) {
     // Update directly
     // Optionally: get the updated document
 
-    const course = await Course.findById(id);
-    if (!course) return;
-
-    course.isPublished = true;
-    course.author = 'Another Author';
-
-
-    // course.set({
-    //     isPublished: true,
-    //     author: 'Another Author'
-    // });
-    const result = await course.save();
-    console.log(result);
+    const course = await Course.findByIdAndUpdate(id, {
+        $set: {
+            author: 'Jason',
+            isPublished: true
+        }
+    },{new: true});
+    console.log(course);
 }
 
 updateCourse('5aed70fa80bb9e09823ce374');
