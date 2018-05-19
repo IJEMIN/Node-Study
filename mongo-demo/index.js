@@ -49,8 +49,9 @@ async function createCourse() {
 
     const course = new Course({
         name: 'Angular Course',
-        category: 'web',
+        category: '-',
         author: 'Mosh',
+        tags: null,
         isPublished: true,
         price: 15
     });
@@ -60,7 +61,9 @@ async function createCourse() {
         console.log(result);
     }
     catch (ex) {
-        console.log(ex.message);
+        for (field in ex.errors) {
+            console.log(ex.errors[field].message);
+        }
     }
 
 }
