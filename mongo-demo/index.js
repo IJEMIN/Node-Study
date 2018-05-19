@@ -16,7 +16,10 @@ const courseSchema = new mongoose.Schema({
     category: {
         type: String,
         required: true,
-        enum: ['web', 'mobile', 'network']
+        enum: ['web', 'mobile', 'network'],
+        lowercase: true,
+        // uppercase: true,
+        trim: true
     },
     author: String,
     tags: {
@@ -39,7 +42,9 @@ const courseSchema = new mongoose.Schema({
         type: Number,
         required: function () { return this.isPublished; }, // this won't be arrow functions. because arrow function doesn't have "this"
         min: 10,
-        max: 200
+        max: 200,
+        get: v => Math.round(v),
+        set: v => Math.round(v)
     }
 });
 
@@ -49,11 +54,11 @@ async function createCourse() {
 
     const course = new Course({
         name: 'Angular Course',
-        category: '-',
+        category: 'Web',
         author: 'Mosh',
-        tags: null,
+        tags: ['frontend'],
         isPublished: true,
-        price: 15
+        price: 15.8
     });
 
     try {
@@ -65,10 +70,9 @@ async function createCourse() {
             console.log(ex.errors[field].message);
         }
     }
-
 }
 
-async function getGetcourse() {
+async function getCourse() {
     const pageNumber = 2;
     const pageSize = 10;
     // /api/courses?pageNumber=2&pageSize=10
@@ -81,13 +85,14 @@ async function getGetcourse() {
     // lte (less than or equal to)
     // in
     // nin (not in)
-    const course = await Course
-        .find({ author: 'Mosh', isPublished: true })
-        .skip((pageNumber - 1) * pageSize)
-        .limit(pageSize)
+    const courses = await Course
+        .find({ _id: '5affbb03e19daa16fe6c45ed' })
+        // .skip((pageNumber - 1) * pageSize)
+        // .limit(pageSize)
         .sort({ name: 1 })
+        .select({name: 1, tags: 1, price: 1})
 
-    console.log(course);
+    console.log(courses[0].price);
 }
 
 async function updateCourse(id) {
@@ -115,4 +120,5 @@ async function removeCourse(id) {
     console.log(course);
 }
 
-createCourse();
+// createCourse();
+getCourse();
